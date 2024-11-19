@@ -8,8 +8,26 @@ const saveToLocalStorage = () => {
 
 const handleInput = event => {
   const { name, value } = event.target;
-  formData[name] = value;
+  formData[name] = value.trim();
   saveToLocalStorage();
+};
+
+const handleSubmit = event => {
+  event.preventDefault();
+
+  const email = formData.email.trim();
+  const message = formData.message.trim();
+
+  if (!email || !message) {
+    alert('Fill all fields, please.');
+    return;
+  }
+
+  console.log({ email, message });
+
+  form.reset();
+  formData = { email: '', message: '' };
+  localStorage.removeItem(STORAGE_KEY);
 };
 
 const populateForm = () => {
@@ -20,24 +38,9 @@ const populateForm = () => {
     form.elements.email.value = formData.email || '';
     form.elements.message.value = formData.message || '';
   }
-
-  const handleSubmit = event => {
-    event.preventDefault();
-
-    if (!formData.email || !formData.message) {
-      alert('Fill please all fields');
-      return;
-    }
-
-    console.log(formData);
-
-    form.reset();
-    formData = { email: '', message: '' };
-    localStorage.removeItem(STORAGE_KEY);
-  };
-
-  form.addEventListener('input', handleInput);
-  form.addEventListener('submit', handleSubmit);
-
-  populateForm();
 };
+
+form.addEventListener('input', handleInput);
+form.addEventListener('submit', handleSubmit);
+
+populateForm();
