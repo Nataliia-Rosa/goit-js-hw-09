@@ -2,11 +2,6 @@ const STORAGE_KEY = 'feedback-form-state';
 let formData = { email: '', message: '' };
 const form = document.querySelector('.feedback-form');
 
-form.addEventListener('input', handleInput);
-form.addEventListener('submit', handleSubmit);
-
-populateForm();
-
 const saveToLocalStorage = () => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 };
@@ -42,4 +37,9 @@ const populateForm = () => {
     form.elements.message.value = formData.message || '';
   }
 };
+
+form.addEventListener('input', handleInput);
+form.addEventListener('submit', handleSubmit);
+
+populateForm();
 
